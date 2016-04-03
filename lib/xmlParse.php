@@ -26,8 +26,8 @@ class xmlParse {
                             $offers['marks'][$res['mark']]['price'][$res['price']]['htmlOffers'] .= $html->offerGenerate($res, $pageCount, $offerCount);
                             $offers['marks'][$res['mark']]['models'][$res['model']][] = $res;
                             $offers['marks'][$res['mark']]['models'][$res['model']]['price'][$res['price']]['htmlOffers'] .= $html->offerGenerate($res, $pageCount, $offerCount);
-                            $offers['offers'][$pageCount]['htmlOffers'] .= $res['html'] = $html->offerGenerate($res, $pageCount, $offerCount);
-                            $offers['offers'][$pageCount]['offers'][$offerCount] = $res;
+//                            $offers['offers'][$pageCount]['htmlOffers'] .= $res['html'] = $html->offerGenerate($res, $pageCount, $offerCount);
+//                            $offers['offers'][$pageCount]['offers'][$offerCount] = $res;
                             $offers['offers']['price'][$res['price']][] = $res;
                             if ($offerCount % 81 == 0) {
                                 $pageCount++;
@@ -64,10 +64,12 @@ class xmlParse {
         $pageCount = 1;
         $offerCount = 0;
         foreach ($offers['offers']['price'] as $offer) {
+            foreach ($offer as $item) {
+                $html = new htmlGenerate();
+                $offers['offers'][$pageCount]['htmlOffers'] .= $html->offerGenerate($item, $pageCount, $offerCount);
+                $offerCount++;
+            }
             if ($offerCount %81 == 0) $pageCount++;
-            $html = new htmlGenerate();
-            $offers['offers'][$pageCount]['htmlOffers'] .= $html->offerGenerate($offer[0], $pageCount, $offerCount);
-            $offerCount++;
         }
 
         return $offers;
