@@ -1335,6 +1335,7 @@
 		}
 
 		init();
+		$(this).reloadSlider();
 
 		// returns the current jQuery object
 		return this;

@@ -9,8 +9,9 @@ class htmlGenerate {
 
     public function htmlStructureGen($html) {
         $this->siteFolderGen();
-        $countPage = count($html['offers']);
+        $countPage = count($html['offers']) - 1;
         foreach ($html['offers'] as $num => $page) {
+            var_dump($num);
             if ($num == 1) {
                 $this->indexGenerate($page['htmlOffers'], $countPage, $html['marks']);
                 foreach ($page['offers'] as $id => $offer) {
@@ -98,8 +99,10 @@ class htmlGenerate {
         $sectionMark = '<div id="sectionMark" class="col-sm-6 col-md-4"><div class="widget widget-boxed widget-boxed-dark">
                         <div class="list-group">';
         $i = 0;
+        $sectCount = '';
         foreach ($marks as $mark => $value) {
-            if (($i % round(count($marks)/3)) == 0 && $i != 0) {
+            if (($i % round(count($marks)/3)) == 0 && $i != 0 && $sectCount < 2) {
+                $sectCount++;
                 $sectionMark .= '</div></div></div><div id="sectionMark" class="col-sm-6 col-md-4"><div class="widget widget-boxed widget-boxed-dark"><div class="list-group"><a href="/site/' . strtolower($mark) . '/index.html" class="list-group-item">
                                 <i class="fa fa-angle-right"></i>' . $mark . '</a>';
             } else {
@@ -151,15 +154,15 @@ class htmlGenerate {
                 </div><!-- /.boxes -->
                 <div class="center">
             <ul class="pagination">';
-            if ($countPage !== false) {
-                for ($i = 1; $i <= $countPage; $i++) {
-                    if ($i == 1) {
-                        $pag .= '<li id="p'.$i.'"><a href="/site/index.html">'.$i.'</a></li>';
-                    } else {
-                        $pag .= '<li id="p'.$i.'"><a href="/site/p'.$i.'/index.html">'.$i.'</a></li>';
-                    }
+        if ($countPage !== false) {
+            for ($i = 1; $i <= $countPage; $i++) {
+                if ($i == 1) {
+                    $pag .= '<li id="p'.$i.'"><a href="/site/index.html">'.$i.'</a></li>';
+                } else {
+                    $pag .= '<li id="p'.$i.'"><a href="/site/p'.$i.'/index.html">'.$i.'</a></li>';
                 }
             }
+        }
         $pag .= '</ul>
         </div><!-- /.center -->';
         return $pag;
@@ -191,7 +194,7 @@ class htmlGenerate {
 
                 <div class="box-body">
                     <h2 class="box-title">
-                        <a href="#">'.$offer['mark'].' '.$offer['model'].'</a>
+                        <a href="/site/p'.$pageCount.'/'.$offerCount.'.html">'.$offer['mark'].' '.$offer['model'].'</a>
                     </h2><!-- /.box-title -->
 
                     <div class="box-content">
@@ -248,20 +251,20 @@ class htmlGenerate {
                         <div class="col-sm-6">
                             <div id="gallery-wrapper">
                                 <div class="gallery">';
-            if ($offer['image'][0] == '') { //TODO uznat pro 404 img
-                $detail .= '<div class="slide active">
+        if ($offer['image'][0] == '') {
+            $detail .= '<div class="slide active">
                             <div class="picture-wrapper">
                                 <img src="../htmlSource/nophoto4.png" alt="#">
                             </div>
                         </div>';
-            } else {
-                foreach ($offer['image'] as $k => $image) {
-                    $detail .= '<div class="slide' . (($k == 0) ? ' active' : '') . '">
+        } else {
+            foreach ($offer['image'] as $k => $image) {
+                $detail .= '<div class="slide' . (($k == 0) ? ' active' : '') . '">
                                     <div class="picture-wrapper">
                                         <img src="' . $image . '" alt="#">
                                     </div>
                                 </div>';
-                    if ($k == 4) break;
+                if ($k == 4) break;
             }
             $detail .= '</div><!-- /.gallery -->
 
