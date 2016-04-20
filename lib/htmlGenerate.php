@@ -125,9 +125,12 @@ class htmlGenerate {
         $sectionModel = '<div id="sectionMark" class="col-sm-6 col-md-4"><div class="widget widget-boxed widget-boxed-dark">
                         <div class="list-group">';
         $i = 0;
+        $col = 1;
+        ksort($models);
 
         foreach ($models as $model => $value) {
-            if (($i % round(count($models)/3)) == 0 && count($models) >= 3 && $i != 0) {
+            if (($i % round(count($models)/3)) == 0 && count($models) >= 3 && $i != 0 && $col < 3) {
+                $col++;
                 $sectionModel .= '</div></div></div><div id="sectionMark" class="col-sm-6 col-md-4"><div class="widget widget-boxed widget-boxed-dark"><div class="list-group"><a href="/site/' .strtolower($mark).'/'. strtolower($model) . '/index.html" class="list-group-item">
                                 <i class="fa fa-angle-right"></i>' . $model . '</a>';
             } else {
