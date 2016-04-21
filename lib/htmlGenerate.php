@@ -101,7 +101,7 @@ class htmlGenerate {
         $i = 0;
         $sectCount = '';
         foreach ($marks as $mark => $value) {
-            if (($i % round(count($marks)/3)) == 0 && $i != 0 && $sectCount < 2) {
+            if (($i % ceil(count($marks)/3)) == 0 && $i != 0 && $sectCount < 2) {
                 $sectCount++;
                 $sectionMark .= '</div></div></div><div id="sectionMark" class="col-sm-6 col-md-4"><div class="widget widget-boxed widget-boxed-dark"><div class="list-group"><a href="/site/' . strtolower($mark) . '/index.html" class="list-group-item">
                                 <i class="fa fa-angle-right"></i>' . $mark . '</a>';
@@ -129,7 +129,7 @@ class htmlGenerate {
         ksort($models);
 
         foreach ($models as $model => $value) {
-            if (($i % round(count($models)/3)) == 0 && count($models) >= 3 && $i != 0 && $col < 3) {
+            if (($i % ceil(count($models)/3)) == 0 && count($models) >= 3 && $i != 0 && $col < 3) {
                 $col++;
                 $sectionModel .= '</div></div></div><div id="sectionMark" class="col-sm-6 col-md-4"><div class="widget widget-boxed widget-boxed-dark"><div class="list-group"><a href="/site/' .strtolower($mark).'/'. strtolower($model) . '/index.html" class="list-group-item">
                                 <i class="fa fa-angle-right"></i>' . $model . '</a>';
@@ -203,7 +203,7 @@ class htmlGenerate {
                     <div class="box-content">
                         <dl class="dl-horizontal">
                             <dt class="odd">Цена</dt>
-                            <dd class="odd price">'.$offer['price'].' '.$offer['currency-type'].'</dd>
+                            <dd class="odd price">'.number_format($offer['price'],0, '', ' ').' '.$offer['currency-type'].'</dd>
                             <dt>Пробег</dt>
                             <dd>'.$offer['run'].' km</dd>
                             <dt class="odd">Цвет</dt>
@@ -231,7 +231,7 @@ class htmlGenerate {
         $menu = '<ul><li><ul>';
         $i = 1;
         foreach ($marks as $mark => $value) {
-            if (($i % round(count($marks)/3)) == 0) {
+            if (($i % ceil(count($marks)/3)) == 0) {
                 $menu .= '</ul></li><li><ul>';
             } else {
                 $menu .= '<li><a href="/site/'.strtolower($mark).'/index.html">'.$mark.'</a></li>';
@@ -311,7 +311,7 @@ class htmlGenerate {
                                         <tbody>
                                         <tr>
                                             <td class="property">Цена</td>
-                                            <td class="value">'.$offer['price'].'</td>
+                                            <td class="value">'.number_format($offer['price'],0, '', ' ').'</td>
                                         </tr>
                                         <tr>
                                             <td class="property">Салон</td>
