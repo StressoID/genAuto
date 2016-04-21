@@ -174,15 +174,14 @@ class htmlGenerate {
     public function siteFolderGen() {
         if (!file_exists('site')) {
             mkdir('site');
-            shell_exec('cp -rv htmlSource site');
-            shell_exec('cp -v .htaccess site');
         } else {
             echo 'Directory "site" already exist - rf rf......';
             shell_exec('rm -rf site');
             mkdir('site');
-            shell_exec('cp -rv htmlSource site');
-            shell_exec('cp -v .htaccess site');
         }
+        shell_exec('cp -rv htmlSource site');
+        shell_exec('cp -v .htaccess site');
+        shell_exec('ln -s site/index.html index.html');
     }
 
     public function offerGenerate($offer, $pageCount, $offerCount) {
