@@ -208,7 +208,7 @@ class htmlGenerate {
                             <dt class="odd">Цвет</dt>
                             <dd class="odd">'.$offer['color'].'</dd>
                             <dt>Телефон</dt>
-                            <dd><a href="tel:'.$offer['seller-phone'].'">'.$offer['seller-phone'].'</a></dd>
+                            <dd><a href="tel:'.$this->phoneFormat($offer["seller-phone"]).'">'.$offer['seller-phone'].'</a></dd>
                         </dl>
                     </div><!-- /.box-content -->
                 </div><!-- /.box-body -->
@@ -367,7 +367,7 @@ class htmlGenerate {
 
                                         <tr>
                                             <td class="property">Телефон</td>
-                                            <td class="value"><a href="tel:'.$offer['seller-phone'].'">'.$offer['seller-phone'].'</a></td>
+                                            <td class="value"><a href="tel:'.$this->phoneFormat($offer["seller-phone"]).'">'.$offer['seller-phone'].'</a></td>
                                         </tr>
                                         </tbody>
                                     </table><!-- /.table -->
@@ -405,5 +405,9 @@ class htmlGenerate {
         if (file_put_contents('site/404.html', $header.$this->mark_menu.$this->mark_section.$html.$footer)) {
             return true;
         }
+    }
+
+    public function phoneFormat($phone) {
+        return preg_replace('/\D+/', '', $phone);
     }
 }
